@@ -156,9 +156,9 @@
             const star = document.createElement('div');
             star.classList.add('star');
 
-            // ตั้งตำแหน่งเริ่มต้นแบบสุ่ม
+            // ตั้งตำแหน่งเริ่มต้นแบบสุ่มในครึ่งบนของหน้าจอ
             const initialX = Math.random() * window.innerWidth;
-            const initialY = Math.random() * window.innerHeight;
+            const initialY = Math.random() * (window.innerHeight / 2);  // ปรับตำแหน่ง Y ให้อยู่ในครึ่งบนของหน้าจอ
 
             star.style.transform = `translate(${initialX}px, ${initialY}px)`;
 
