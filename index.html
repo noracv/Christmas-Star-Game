@@ -48,19 +48,25 @@
             );
             background: linear-gradient(135deg, #ffd700, #ffa500);
             box-shadow: 0 4px 10px rgba(255, 255, 255, 0.6), 0 0 20px #ff4500;
-            animation: floatStar 4s ease-in-out infinite;
+            animation: floatStar 6s ease-in-out infinite;
         }
 
         /* การเคลื่อนไหวดาว */
         @keyframes floatStar {
             0% {
-                transform: translateY(0) rotate(0deg);
+                transform: translate(0, 0);
+            }
+            25% {
+                transform: translate(100px, -100px);
             }
             50% {
-                transform: translateY(-30px) rotate(15deg);
+                transform: translate(-100px, 100px);
+            }
+            75% {
+                transform: translate(50px, 150px);
             }
             100% {
-                transform: translateY(0) rotate(0deg);
+                transform: translate(0, 0);
             }
         }
 
@@ -147,10 +153,6 @@
         ];
 
         const starsContainer = document.getElementById('stars');
-
-        // คำนวณตำแหน่งของดาวให้อยู่รอบๆ คำว่า "สอยดาวคริสต์มาส"
-        const centerX = window.innerWidth / 2;
-        const centerY = window.innerHeight / 2 - 100;  // ขยับดาวให้อยู่รอบๆ คำว่า "สอยดาวคริสต์มาส"
 
         // สร้างดาวทั้งหมด 20 ดวง
         for (let i = 1; i <= 20; i++) {
