@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>สอยดาวออนไลน์</title>
+    <title>สอยดาวคริสต์มาส</title>
     <style>
         /* พื้นฐาน */
         body {
@@ -11,7 +11,7 @@
             margin: 0;
             padding: 0;
             overflow: hidden;
-            background: linear-gradient(135deg, #89f7fe, #66a6ff);
+            background: linear-gradient(135deg, #8bc6ec, #9599e2);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -22,9 +22,10 @@
         }
 
         h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            font-size: 3.5rem;
+            margin: 20px 0;
+            color: #fff;
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
         }
 
         p {
@@ -32,7 +33,7 @@
             margin-bottom: 30px;
         }
 
-        /* ดาว */
+        /* ดาวคริสต์มาส */
         .star {
             width: 60px;
             height: 60px;
@@ -49,19 +50,29 @@
                 2% 35%,
                 39% 35%
             );
-            background: linear-gradient(135deg, #ffe259, #ffa751);
+            background: linear-gradient(135deg, #ffcc00, #ff6600);
             cursor: pointer;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            animation: move 10s infinite ease-in-out;
+            animation: move 10s infinite ease-in-out, twinkle 2s infinite ease-in-out;
         }
 
         .star:hover {
-            transform: scale(1.2);
+            transform: scale(1.3);
             box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
         }
 
-        /* กำหนดแอนิเมชันการเคลื่อนไหว */
+        /* แสงกระพริบ */
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        /* แอนิเมชันการเคลื่อนไหว */
         @keyframes move {
             0% {
                 transform: translate(0, 0);
@@ -80,13 +91,13 @@
             }
         }
 
-        /* ข้อความสุ่ม */
+        /* ข้อความรางวัล */
         #result {
             position: absolute;
             bottom: 20px;
             font-size: 2rem;
             color: #fff;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.7);
             padding: 20px 40px;
             border-radius: 10px;
             display: inline-block;
@@ -99,45 +110,74 @@
             opacity: 1;
             transform: scale(1);
         }
+
+        /* ไฟประดับ */
+        .lights {
+            position: absolute;
+            top: 10px;
+            width: 100%;
+            height: 30px;
+            background: repeating-linear-gradient(
+                to right,
+                red 0,
+                red 10%,
+                green 10%,
+                green 20%,
+                gold 20%,
+                gold 30%
+            );
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            animation: blink 1.5s infinite ease-in-out;
+        }
+
+        @keyframes blink {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
     </style>
 </head>
 <body>
-    <h1>สอยดาวออนไลน์</h1>
-    <p>คลิกที่ดาวเพื่อสุ่มรางวัล!</p>
+    <div class="lights"></div>
+    <h1>สอยดาวคริสต์มาส</h1>
+    <p>คลิกที่ดาวเพื่อสุ่มรางวัลในวันคริสต์มาส!</p>
     <div id="stars"></div>
     <div id="result"></div>
 
     <script>
-        // รายการคำที่ใช้สุ่ม
+        // รายการรางวัล
         const words = [
-            "รางวัลที่ 1: ทองคำ 1 บาท",
-            "รางวัลที่ 2: โทรศัพท์มือถือ",
-            "รางวัลที่ 3: ตุ๊กตา",
-            "รางวัลปลอบใจ: ขนมหวาน",
-            "โชคดีครั้งหน้า!",
-            "ของขวัญพิเศษ!"
+            "🎁 รางวัลใหญ่: iPhone 15",
+            "🎄 ของขวัญ: หูฟังบลูทูธ",
+            "⭐ โชคดีครั้งหน้า!",
+            "🎅 รางวัลพิเศษ: ขนมคริสต์มาส",
+            "❄️ บัตรของขวัญ 500 บาท",
+            "🎉 ตุ๊กตาหมีน่ารัก!"
         ];
 
         const starsContainer = document.getElementById('stars');
 
-        // สร้างดาว 15 ดวง
-        for (let i = 1; i <= 15; i++) {
+        // สร้างดาวทั้งหมด 20 ดวง
+        for (let i = 1; i <= 20; i++) {
             const star = document.createElement('div');
             star.classList.add('star');
 
-            // ตำแหน่งเริ่มต้นแบบสุ่ม
+            // ตั้งตำแหน่งดาวแบบสุ่ม
             star.style.top = Math.random() * 80 + "vh";
             star.style.left = Math.random() * 90 + "vw";
 
-            // ความเร็วในการเคลื่อนไหวแตกต่างกัน
+            // ตั้งความเร็วแอนิเมชันแตกต่างกัน
             star.style.animationDuration = Math.random() * 5 + 5 + "s";
 
-            // เมื่อคลิกที่ดาว
+            // เพิ่มฟังก์ชันคลิก
             star.addEventListener('click', () => {
                 const randomWord = words[Math.floor(Math.random() * words.length)];
                 const resultDiv = document.getElementById('result');
                 resultDiv.textContent = `คุณได้: ${randomWord}`;
-                resultDiv.classList.add('show'); // แสดงข้อความพร้อมแอนิเมชัน
+                resultDiv.classList.add('show'); // แสดงข้อความรางวัล
 
                 // ซ่อนข้อความหลัง 3 วินาที
                 setTimeout(() => {
