@@ -53,7 +53,7 @@
             );
             background: linear-gradient(135deg, #ffd700, #ffa500);
             box-shadow: 0 4px 10px rgba(255, 255, 255, 0.6), 0 0 20px #ff4500;
-            animation: float 3s ease-in-out infinite, randomMove 5s linear infinite; /* ลอยมั่ว */
+            animation: float 3s ease-in-out infinite, randomMove 10s linear infinite; /* ลอยมั่ว */
         }
 
         /* แอนิเมชัน */
@@ -74,13 +74,13 @@
                 transform: translate(0, 0);
             }
             25% {
-                transform: translate(calc(30px - 60px * random()), calc(20px - 40px * random()));
+                transform: translate(calc(-200px + 400px * random()), calc(-200px + 400px * random()));
             }
             50% {
-                transform: translate(calc(-40px + 80px * random()), calc(30px - 60px * random()));
+                transform: translate(calc(-400px + 800px * random()), calc(-400px + 800px * random()));
             }
             75% {
-                transform: translate(calc(20px - 40px * random()), calc(-10px + 20px * random()));
+                transform: translate(calc(-300px + 600px * random()), calc(-300px + 600px * random()));
             }
             100% {
                 transform: translate(0, 0);
