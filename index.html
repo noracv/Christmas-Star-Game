@@ -53,7 +53,7 @@
             );
             background: linear-gradient(135deg, #ffd700, #ffa500);
             box-shadow: 0 4px 10px rgba(255, 255, 255, 0.6), 0 0 20px #ff4500;
-            animation: float 1s ease-in-out infinite, move 2s linear infinite; /* ปรับความเร็วให้เร็วขึ้น */
+            animation: float 1s ease-in-out infinite, move 1.5s linear infinite; /* เร่งความเร็ว */
         }
 
         /* แอนิเมชัน */
@@ -71,13 +71,19 @@
 
         @keyframes move {
             0% {
-                transform: translateX(0px);
+                transform: translateX(0px) translateY(0px);
+            }
+            25% {
+                transform: translateX(20px) translateY(-10px);
             }
             50% {
-                transform: translateX(15px);
+                transform: translateX(-20px) translateY(15px);
+            }
+            75% {
+                transform: translateX(15px) translateY(-15px);
             }
             100% {
-                transform: translateX(0px);
+                transform: translateX(0px) translateY(0px);
             }
         }
 
