@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>สอยดาวออนไลน์</title>
     <style>
-        /* ตั้งค่าพื้นฐาน */
+        /* พื้นฐาน */
         body {
             font-family: 'Prompt', sans-serif;
             margin: 0;
@@ -15,14 +15,15 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
             color: #ffffff;
+            text-align: center;
         }
 
         h1 {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
         }
 
         p {
@@ -30,62 +31,92 @@
             margin-bottom: 30px;
         }
 
-        /* กำหนดสไตล์กล่อง */
-        #boxes {
+        /* พื้นที่รูปดาว */
+        #stars {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
             gap: 20px;
             width: 90%;
             max-width: 800px;
         }
 
-        .box {
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            font-size: 1rem;
-            font-weight: bold;
-            color: #333;
+        /* รูปดาว */
+        .star {
+            width: 80px;
+            height: 80px;
+            margin: auto;
+            clip-path: polygon(
+                50% 0%,
+                61% 35%,
+                98% 35%,
+                68% 57%,
+                79% 91%,
+                50% 70%,
+                21% 91%,
+                32% 57%,
+                2% 35%,
+                39% 35%
+            );
+            background: linear-gradient(135deg, #ffe259, #ffa751);
             cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .box:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+        .star:hover {
+            transform: scale(1.2);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
         }
 
+        /* ข้อความที่สุ่มได้ */
         #result {
-            margin-top: 30px;
-            font-size: 1.5rem;
+            margin-top: 40px;
+            font-size: 2rem;
             color: #fff;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px 40px;
+            border-radius: 10px;
+            display: inline-block;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.5s ease;
+        }
+
+        #result.show {
+            opacity: 1;
+            transform: scale(1);
         }
     </style>
 </head>
 <body>
     <h1>สอยดาวออนไลน์</h1>
-    <p>คลิกที่กล่องเพื่อสุ่มรางวัล!</p>
-    <div id="boxes"></div>
+    <p>คลิกที่ดาวเพื่อสุ่มรางวัล!</p>
+    <div id="stars"></div>
     <div id="result"></div>
 
     <script>
-        // รายการคำสำหรับสุ่ม
-        const words = ["รางวัลที่ 1", "รางวัลที่ 2", "ของขวัญพิเศษ", "ตุ๊กตา", "ขนมหวาน", "โชคดีครั้งหน้า", "รางวัลสุดเจ๋ง"];
+        // รายการคำที่ใช้สุ่ม
+        const words = [
+            "รางวัลที่ 1: ทองคำ 1 บาท",
+            "รางวัลที่ 2: โทรศัพท์มือถือ",
+            "รางวัลที่ 3: ตุ๊กตา",
+            "รางวัลปลอบใจ: ขนมหวาน",
+            "โชคดีครั้งหน้า!",
+            "ของขวัญพิเศษ!"
+        ];
 
-        // สร้างกล่องสุ่ม
-        const boxesContainer = document.getElementById('boxes');
-        for (let i = 1; i <= 12; i++) { // 12 กล่อง
-            const box = document.createElement('div');
-            box.classList.add('box');
-            box.textContent = `กล่อง ${i}`;
-            box.addEventListener('click', () => {
+        // สร้างดาวสุ่ม
+        const starsContainer = document.getElementById('stars');
+        for (let i = 1; i <= 12; i++) { // 12 ดาว
+            const star = document.createElement('div');
+            star.classList.add('star');
+            star.addEventListener('click', () => {
                 const randomWord = words[Math.floor(Math.random() * words.length)];
-                document.getElementById('result').textContent = `คุณได้: ${randomWord}`;
+                const resultDiv = document.getElementById('result');
+                resultDiv.textContent = `คุณได้: ${randomWord}`;
+                resultDiv.classList.add('show'); // แสดงข้อความพร้อมแอนิเมชัน
             });
-            boxesContainer.appendChild(box);
+            starsContainer.appendChild(star);
         }
     </script>
 </body>
