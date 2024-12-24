@@ -158,11 +158,11 @@
             star.classList.add('star');
 
             // กระจายดาวให้ลอยในพื้นที่รอบๆ
-            const offsetX = Math.random() * 200 - 100; // ระยะการกระจายดาวในแนวนอน
-            const offsetY = Math.random() * 200 - 100; // ระยะการกระจายดาวในแนวตั้ง
+            const offsetX = Math.random() * window.innerWidth; // ใช้ตำแหน่งสุ่มในแนวนอน
+            const offsetY = Math.random() * window.innerHeight; // ใช้ตำแหน่งสุ่มในแนวตั้ง
 
-            star.style.left = `${centerX + offsetX}px`;
-            star.style.top = `${centerY + offsetY}px`;
+            star.style.left = `${offsetX}px`;
+            star.style.top = `${offsetY}px`;
 
             // เพิ่มฟังก์ชันคลิก
             star.addEventListener('click', () => {
