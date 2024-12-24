@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>สอยดาวคริสต์มาส</title>
     <style>
-        /* พื้นฐาน */
         body {
             font-family: 'Prompt', sans-serif;
             margin: 0;
@@ -26,10 +25,8 @@
             color: #fff;
             margin-bottom: 10px;
             text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);
-            position: relative;
         }
 
-        /* ดาว */
         .star {
             width: 70px;
             height: 70px;
@@ -48,70 +45,7 @@
             );
             background: linear-gradient(135deg, #ffd700, #ffa500);
             box-shadow: 0 4px 10px rgba(255, 255, 255, 0.6), 0 0 20px #ff4500;
-            animation: floatStar 6s ease-in-out infinite;
-        }
-
-        /* การเคลื่อนไหวดาว (กระจายไปมาทั่วหน้าจอ) */
-        @keyframes floatStar {
-            0% {
-                transform: translate(0, 0);
-            }
-            25% {
-                transform: translate(100px, -100px);
-            }
-            50% {
-                transform: translate(-100px, 100px);
-            }
-            75% {
-                transform: translate(50px, 150px);
-            }
-            100% {
-                transform: translate(0, 0);
-            }
-        }
-
-        /* ดาวตก */
-        .falling-star {
-            width: 5px;
-            height: 5px;
-            background: linear-gradient(135deg, #ffffff, #ffd700);
-            position: absolute;
-            border-radius: 50%;
-            box-shadow: 0 0 10px #ffd700;
-            animation: fallStar 3s linear infinite;
-        }
-
-        @keyframes fallStar {
-            0% {
-                transform: translate(0, 0) scale(1);
-                opacity: 1;
-            }
-            70% {
-                opacity: 0.7;
-            }
-            100% {
-                transform: translate(200px, 600px) scale(0.5);
-                opacity: 0;
-            }
-        }
-
-        /* หิมะตก */
-        .snowflake {
-            position: absolute;
-            top: -10px;
-            color: white;
-            font-size: 1rem;
-            opacity: 0.8;
-            animation: fall linear infinite;
-        }
-
-        @keyframes fall {
-            0% {
-                transform: translateY(0) rotate(0deg);
-            }
-            100% {
-                transform: translateY(100vh) rotate(360deg);
-            }
+            animation: floatStar infinite;
         }
 
         /* ข้อความรางวัล */
@@ -159,21 +93,37 @@
             const star = document.createElement('div');
             star.classList.add('star');
 
-            // กระจายดาวให้ลอยในพื้นที่รอบๆ
-            const offsetX = Math.random() * window.innerWidth; // ใช้ตำแหน่งสุ่มในแนวนอน
-            const offsetY = Math.random() * window.innerHeight; // ใช้ตำแหน่งสุ่มในแนวตั้ง
+            // กำหนดตำแหน่งเริ่มต้นแบบสุ่ม
+            const offsetX = Math.random() * window.innerWidth; 
+            const offsetY = Math.random() * window.innerHeight; 
 
             star.style.left = `${offsetX}px`;
             star.style.top = `${offsetY}px`;
+
+            // สร้าง keyframes การเคลื่อนไหวแบบสุ่ม
+            const duration = Math.random() * 10 + 5; // ระยะเวลา 5-15 วินาที
+            const animationName = `floatStar${i}`;
+            const keyframes = `
+                @keyframes ${animationName} {
+                    0% { transform: translate(0, 0); }
+                    25% { transform: translate(${Math.random() * 200 - 100}px, ${Math.random() * 200 - 100}px); }
+                    50% { transform: translate(${Math.random() * 200 - 100}px, ${Math.random() * 200 - 100}px); }
+                    75% { transform: translate(${Math.random() * 200 - 100}px, ${Math.random() * 200 - 100}px); }
+                    100% { transform: translate(0, 0); }
+                }
+            `;
+            const styleSheet = document.styleSheets[0];
+            styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
+
+            star.style.animation = `${animationName} ${duration}s ease-in-out infinite`;
 
             // เพิ่มฟังก์ชันคลิก
             star.addEventListener('click', () => {
                 const randomWord = words[Math.floor(Math.random() * words.length)];
                 const resultDiv = document.getElementById('result');
                 resultDiv.textContent = `คุณได้: ${randomWord}`;
-                resultDiv.classList.add('show'); // แสดงข้อความรางวัล
+                resultDiv.classList.add('show'); 
 
-                // ซ่อนข้อความหลัง 3 วินาที
                 setTimeout(() => {
                     resultDiv.classList.remove('show');
                 }, 3000);
@@ -181,39 +131,6 @@
 
             starsContainer.appendChild(star);
         }
-
-        // ฟังก์ชันสร้างดาวตก
-        function createFallingStar() {
-            const fallingStar = document.createElement('div');
-            fallingStar.classList.add('falling-star');
-            fallingStar.style.top = Math.random() * 20 + "vh";
-            fallingStar.style.left = Math.random() * 100 + "vw";
-            fallingStar.style.animationDuration = Math.random() * 2 + 1 + "s";
-            document.body.appendChild(fallingStar);
-
-            setTimeout(() => {
-                fallingStar.remove();
-            }, 3000);
-        }
-
-        setInterval(createFallingStar, 500); // เพิ่มดาวตกใหม่ทุก 500ms
-
-        // สร้างหิมะตก
-        function createSnowflakes() {
-            const snowflake = document.createElement('div');
-            snowflake.classList.add('snowflake');
-            snowflake.textContent = '❄';
-            snowflake.style.left = Math.random() * 100 + "vw";
-            snowflake.style.animationDuration = Math.random() * 3 + 2 + "s";
-            snowflake.style.fontSize = Math.random() * 10 + 10 + "px";
-            document.body.appendChild(snowflake);
-
-            setTimeout(() => {
-                snowflake.remove();
-            }, 5000);
-        }
-
-        setInterval(createSnowflakes, 200); // เพิ่มหิมะใหม่ทุก 200ms
     </script>
 </body>
 </html>
