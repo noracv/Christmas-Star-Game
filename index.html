@@ -26,12 +26,7 @@
             color: #fff;
             margin-bottom: 10px;
             text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);
-        }
-
-        p {
-            font-size: 1.4rem;
-            margin-bottom: 30px;
-            color: #f8f8f8;
+            position: relative;
         }
 
         /* ดาว */
@@ -140,14 +135,13 @@
         const starsContainer = document.getElementById('stars');
 
         // ฟังก์ชันให้ดาวลอยแบบสุ่ม
-        function moveStarRandomly(star) {
+        function moveStarRandomly(star, centerX, centerY) {
             setInterval(() => {
-                const randomX = Math.random() * window.innerWidth;
-                const randomY = Math.random() * window.innerHeight;
-                const randomDuration = Math.random() * 2000 + 1000; // ความเร็วแบบสุ่ม 1-3 วินาที
+                const randomX = Math.random() * 100 - 50; // ระยะการเคลื่อนที่ของดาวในแนวนอน
+                const randomY = Math.random() * 100 - 50; // ระยะการเคลื่อนที่ของดาวในแนวตั้ง
 
-                star.style.transition = `transform ${randomDuration}ms ease-in-out`;
-                star.style.transform = `translate(${randomX}px, ${randomY}px)`;
+                star.style.transition = 'transform 1s ease-in-out';
+                star.style.transform = `translate(${centerX + randomX}px, ${centerY + randomY}px)`; 
             }, 2000); // เปลี่ยนตำแหน่งทุก 2 วินาที
         }
 
@@ -156,14 +150,12 @@
             const star = document.createElement('div');
             star.classList.add('star');
 
-            // ตั้งตำแหน่งเริ่มต้นแบบสุ่มในครึ่งบนของหน้าจอ
-            const initialX = Math.random() * window.innerWidth;
-            const initialY = Math.random() * (window.innerHeight / 2);  // ปรับตำแหน่ง Y ให้อยู่ในครึ่งบนของหน้าจอ
-
-            star.style.transform = `translate(${initialX}px, ${initialY}px)`;
+            // คำนวณตำแหน่งของดาวให้อยู่รอบๆ คำว่า "สอยดาวคริสต์มาส"
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2 - 100;  // ขยับดาวให้อยู่รอบๆ คำว่า "สอยดาวคริสต์มาส"
 
             // เรียกใช้งานฟังก์ชันให้ดาวลอยแบบสุ่ม
-            moveStarRandomly(star);
+            moveStarRandomly(star, centerX, centerY);
 
             // เพิ่มฟังก์ชันคลิก
             star.addEventListener('click', () => {
