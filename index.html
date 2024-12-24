@@ -11,7 +11,7 @@
             margin: 0;
             padding: 0;
             overflow: hidden;
-            background: linear-gradient(135deg, #8bc6ec, #9599e2);
+            background: linear-gradient(135deg, #2e8b57, #006400);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -22,21 +22,69 @@
         }
 
         h1 {
-            font-size: 3.5rem;
-            margin: 20px 0;
+            font-size: 4rem;
             color: #fff;
-            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);
         }
 
         p {
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             margin-bottom: 30px;
+            color: #f8f8f8;
+        }
+
+        /* หิมะตก */
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            color: #fff;
+            font-size: 1rem;
+            opacity: 0.8;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        /* ไฟประดับ */
+        .lights {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 20px;
+            background: repeating-linear-gradient(
+                to right,
+                red 0,
+                red 10%,
+                green 10%,
+                green 20%,
+                gold 20%,
+                gold 30%
+            );
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+            animation: blink 2s infinite ease-in-out;
+        }
+
+        @keyframes blink {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
         }
 
         /* ดาวคริสต์มาส */
         .star {
-            width: 60px;
-            height: 60px;
+            width: 70px;
+            height: 70px;
             position: absolute;
             clip-path: polygon(
                 50% 0%,
@@ -50,41 +98,25 @@
                 2% 35%,
                 39% 35%
             );
-            background: linear-gradient(135deg, #ffcc00, #ff6600);
+            background: linear-gradient(135deg, #ffd700, #ffa500);
             cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            animation: move 10s infinite ease-in-out, twinkle 2s infinite ease-in-out;
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.6), 0 0 20px #ff4500;
+            transition: transform 0.3s ease;
+            animation: float 8s infinite ease-in-out;
         }
 
         .star:hover {
             transform: scale(1.3);
-            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.8), 0 0 30px #ff4500;
         }
 
-        /* แสงกระพริบ */
-        @keyframes twinkle {
-            0%, 100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.5;
-            }
-        }
-
-        /* แอนิเมชันการเคลื่อนไหว */
-        @keyframes move {
+        /* แอนิเมชันการลอยของดาว */
+        @keyframes float {
             0% {
                 transform: translate(0, 0);
             }
-            25% {
-                transform: translate(30px, -50px);
-            }
             50% {
-                transform: translate(-30px, 50px);
-            }
-            75% {
-                transform: translate(50px, 30px);
+                transform: translate(10px, -10px);
             }
             100% {
                 transform: translate(0, 0);
@@ -94,12 +126,12 @@
         /* ข้อความรางวัล */
         #result {
             position: absolute;
-            bottom: 20px;
+            bottom: 30px;
             font-size: 2rem;
             color: #fff;
             background: rgba(0, 0, 0, 0.7);
             padding: 20px 40px;
-            border-radius: 10px;
+            border-radius: 15px;
             display: inline-block;
             opacity: 0;
             transform: scale(0.8);
@@ -110,40 +142,12 @@
             opacity: 1;
             transform: scale(1);
         }
-
-        /* ไฟประดับ */
-        .lights {
-            position: absolute;
-            top: 10px;
-            width: 100%;
-            height: 30px;
-            background: repeating-linear-gradient(
-                to right,
-                red 0,
-                red 10%,
-                green 10%,
-                green 20%,
-                gold 20%,
-                gold 30%
-            );
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-            animation: blink 1.5s infinite ease-in-out;
-        }
-
-        @keyframes blink {
-            0%, 100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.5;
-            }
-        }
     </style>
 </head>
 <body>
     <div class="lights"></div>
     <h1>สอยดาวคริสต์มาส</h1>
-    <p>คลิกที่ดาวเพื่อสุ่มรางวัลในวันคริสต์มาส!</p>
+    <p>คลิกที่ดาวเพื่อรับของขวัญสุดพิเศษในวันคริสต์มาส!</p>
     <div id="stars"></div>
     <div id="result"></div>
 
@@ -187,6 +191,23 @@
 
             starsContainer.appendChild(star);
         }
+
+        // สร้างหิมะตก
+        function createSnowflakes() {
+            const snowflake = document.createElement('div');
+            snowflake.classList.add('snowflake');
+            snowflake.textContent = '❄';
+            snowflake.style.left = Math.random() * 100 + "vw";
+            snowflake.style.animationDuration = Math.random() * 3 + 2 + "s";
+            snowflake.style.fontSize = Math.random() * 10 + 10 + "px";
+            document.body.appendChild(snowflake);
+
+            setTimeout(() => {
+                snowflake.remove();
+            }, 5000);
+        }
+
+        setInterval(createSnowflakes, 200);
     </script>
 </body>
 </html>
