@@ -12,20 +12,28 @@
             overflow: hidden;
             background: linear-gradient(135deg, #2e8b57, #006400);
             height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             color: white;
+        }
+
+        .center-text {
+            text-align: center;
+            z-index: 10; /* เพื่อให้อยู่ด้านบน */
         }
 
         h1 {
             font-size: 4rem;
             color: #fff;
-            margin-top: 20px;
+            margin: 0;
             text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);
-            text-align: center;
         }
 
         p {
-            text-align: center;
-            color: #fff;
+            margin: 10px 0;
+            font-size: 1.5rem;
         }
 
         .star {
@@ -49,7 +57,6 @@
             animation: floatStar infinite;
         }
 
-        /* ข้อความรางวัล */
         #result {
             position: absolute;
             bottom: 30px;
@@ -72,8 +79,10 @@
     </style>
 </head>
 <body>
-    <h1>สอยดาวคริสต์มาส</h1>
-    <p>คลิกที่ดาวเพื่อรับของขวัญสุดพิเศษในวันคริสต์มาส!</p>
+    <div class="center-text">
+        <h1>สอยดาวคริสต์มาส</h1>
+        <p>คลิกที่ดาวเพื่อรับของขวัญสุดพิเศษในวันคริสต์มาส!</p>
+    </div>
     <div id="stars"></div>
     <div id="result"></div>
 
