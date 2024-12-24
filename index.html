@@ -53,7 +53,6 @@
             );
             background: linear-gradient(135deg, #ffd700, #ffa500);
             box-shadow: 0 4px 10px rgba(255, 255, 255, 0.6), 0 0 20px #ff4500;
-            animation: float 3s ease-in-out infinite, randomMove 5s linear infinite; /* ลอยมั่ว */
         }
 
         /* ดาวตก */
@@ -78,37 +77,6 @@
             100% {
                 transform: translate(200px, 600px) scale(0.5);
                 opacity: 0;
-            }
-        }
-
-        /* แอนิเมชัน */
-        @keyframes float {
-            0% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-            100% {
-                transform: translateY(0px);
-            }
-        }
-
-        @keyframes randomMove {
-            0% {
-                transform: translate(0, 0);
-            }
-            25% {
-                transform: translate(calc(-100px + 200px * random()), calc(-100px + 200px * random()));
-            }
-            50% {
-                transform: translate(calc(-200px + 400px * random()), calc(-200px + 400px * random()));
-            }
-            75% {
-                transform: translate(calc(-150px + 300px * random()), calc(-150px + 300px * random()));
-            }
-            100% {
-                transform: translate(0, 0);
             }
         }
 
@@ -171,14 +139,31 @@
 
         const starsContainer = document.getElementById('stars');
 
+        // ฟังก์ชันให้ดาวลอยแบบสุ่ม
+        function moveStarRandomly(star) {
+            setInterval(() => {
+                const randomX = Math.random() * window.innerWidth;
+                const randomY = Math.random() * window.innerHeight;
+                const randomDuration = Math.random() * 2000 + 1000; // ความเร็วแบบสุ่ม 1-3 วินาที
+
+                star.style.transition = `transform ${randomDuration}ms ease-in-out`;
+                star.style.transform = `translate(${randomX}px, ${randomY}px)`;
+            }, 2000); // เปลี่ยนตำแหน่งทุก 2 วินาที
+        }
+
         // สร้างดาวทั้งหมด 20 ดวง
         for (let i = 1; i <= 20; i++) {
             const star = document.createElement('div');
             star.classList.add('star');
 
-            // ตั้งตำแหน่งดาวแบบสุ่ม
-            star.style.top = Math.random() * 80 + "vh";
-            star.style.left = Math.random() * 90 + "vw";
+            // ตั้งตำแหน่งเริ่มต้นแบบสุ่ม
+            const initialX = Math.random() * window.innerWidth;
+            const initialY = Math.random() * window.innerHeight;
+
+            star.style.transform = `translate(${initialX}px, ${initialY}px)`;
+
+            // เรียกใช้งานฟังก์ชันให้ดาวลอยแบบสุ่ม
+            moveStarRandomly(star);
 
             // เพิ่มฟังก์ชันคลิก
             star.addEventListener('click', () => {
