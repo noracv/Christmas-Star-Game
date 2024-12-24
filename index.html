@@ -56,6 +56,31 @@
             animation: float 3s ease-in-out infinite, randomMove 10s linear infinite; /* ลอยมั่ว */
         }
 
+        /* ดาวตก */
+        .falling-star {
+            width: 5px;
+            height: 5px;
+            background: linear-gradient(135deg, #ffffff, #ffd700);
+            position: absolute;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #ffd700;
+            animation: fallStar 3s linear infinite;
+        }
+
+        @keyframes fallStar {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+            70% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translate(200px, 600px) scale(0.5);
+                opacity: 0;
+            }
+        }
+
         /* แอนิเมชัน */
         @keyframes float {
             0% {
@@ -170,6 +195,22 @@
 
             starsContainer.appendChild(star);
         }
+
+        // ฟังก์ชันสร้างดาวตก
+        function createFallingStar() {
+            const fallingStar = document.createElement('div');
+            fallingStar.classList.add('falling-star');
+            fallingStar.style.top = Math.random() * 20 + "vh";
+            fallingStar.style.left = Math.random() * 100 + "vw";
+            fallingStar.style.animationDuration = Math.random() * 2 + 1 + "s";
+            document.body.appendChild(fallingStar);
+
+            setTimeout(() => {
+                fallingStar.remove();
+            }, 3000);
+        }
+
+        setInterval(createFallingStar, 500); // เพิ่มดาวตกใหม่ทุก 500ms
 
         // สร้างหิมะตก
         function createSnowflakes() {
