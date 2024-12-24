@@ -21,7 +21,7 @@
 
         .center-text {
             text-align: center;
-            z-index: 10; /* เพื่อให้อยู่ด้านบน */
+            z-index: 10;
         }
 
         h1 {
@@ -62,11 +62,11 @@
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 2rem;
+            font-size: 1.5rem;
             color: #fff;
             background: rgba(0, 0, 0, 0.7);
-            padding: 20px 40px;
-            border-radius: 15px;
+            padding: 10px 20px;
+            border-radius: 10px;
             opacity: 0;
             transform: scale(0.8);
             transition: all 0.5s ease;
@@ -75,6 +75,24 @@
         #result.show {
             opacity: 1;
             transform: scale(1);
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            color: white;
+            font-size: 1rem;
+            opacity: 0.8;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+            }
         }
     </style>
 </head>
@@ -104,15 +122,13 @@
             const star = document.createElement('div');
             star.classList.add('star');
 
-            // กำหนดตำแหน่งเริ่มต้นแบบสุ่ม
-            const offsetX = Math.random() * window.innerWidth; 
-            const offsetY = Math.random() * window.innerHeight; 
+            const offsetX = Math.random() * window.innerWidth;
+            const offsetY = Math.random() * window.innerHeight;
 
             star.style.left = `${offsetX}px`;
             star.style.top = `${offsetY}px`;
 
-            // สร้าง keyframes การเคลื่อนไหวแบบอิสระ
-            const duration = Math.random() * 10 + 5; // ระยะเวลา 5-15 วินาที
+            const duration = Math.random() * 10 + 5; 
             const animationName = `floatStar${i}`;
             const keyframes = `
                 @keyframes ${animationName} {
@@ -128,12 +144,11 @@
 
             star.style.animation = `${animationName} ${duration}s ease-in-out infinite`;
 
-            // เพิ่มฟังก์ชันคลิก
             star.addEventListener('click', () => {
                 const randomWord = words[Math.floor(Math.random() * words.length)];
                 const resultDiv = document.getElementById('result');
                 resultDiv.textContent = `คุณได้: ${randomWord}`;
-                resultDiv.classList.add('show'); 
+                resultDiv.classList.add('show');
 
                 setTimeout(() => {
                     resultDiv.classList.remove('show');
@@ -142,6 +157,23 @@
 
             starsContainer.appendChild(star);
         }
+
+        // สร้างหิมะตก
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            snowflake.classList.add('snowflake');
+            snowflake.textContent = '❄';
+            snowflake.style.left = Math.random() * 100 + "vw";
+            snowflake.style.animationDuration = Math.random() * 3 + 2 + "s";
+            snowflake.style.fontSize = Math.random() * 10 + 10 + "px";
+            document.body.appendChild(snowflake);
+
+            setTimeout(() => {
+                snowflake.remove();
+            }, 5000);
+        }
+
+        setInterval(createSnowflake, 200); // เพิ่มหิมะใหม่ทุก 200ms
     </script>
 </body>
 </html>
