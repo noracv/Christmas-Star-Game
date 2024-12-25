@@ -122,29 +122,46 @@
     <div id="result"></div>
 
     <script>
-        // รายการรางวัล
-        const words = [
-            "🎁 รางวัลใหญ่: iPhone 15",
-            "🎄 ของขวัญ: หูฟังบลูทูธ",
-            "⭐ โชคดีครั้งหน้า!",
-            "🎅 รางวัลพิเศษ: ขนมคริสต์มาส",
-            "❄️ บัตรของขวัญ 500 บาท",
-            "🎉 ตุ๊กตาหมีน่ารัก!"
+        // รายการรางวัลพร้อมจำนวนชิ้น
+        const prizes = [
+            { name: "🎁 รางวัลใหญ่: iPhone 15", count: 1 },
+            { name: "🎄 ของขวัญ: หูฟังบลูทูธ", count: 1 },
+            { name: "⭐ โชคดีครั้งหน้า!", count: Infinity }, // ไม่มีจำกัด
+            { name: "🎅 รางวัลพิเศษ: ขนมคริสต์มาส", count: 1 },
+            { name: "❄️ บัตรของขวัญ 500 บาท", count: 1 },
+            { name: "🎉 ตุ๊กตาหมีน่ารัก!", count: 1 }
         ];
-
+    
         const starsContainer = document.getElementById('stars');
-
+    
+        // ฟังก์ชันสุ่มรางวัล
+        function getRandomPrize() {
+            const availablePrizes = prizes.filter(prize => prize.count > 0);
+            if (availablePrizes.length === 0) {
+                return "🎈 รางวัลหมดแล้ว! โชคดีครั้งหน้า!";
+            }
+            const randomIndex = Math.floor(Math.random() * availablePrizes.length);
+            const selectedPrize = availablePrizes[randomIndex];
+    
+            // ลดจำนวนรางวัลที่เหลือ
+            if (selectedPrize.count !== Infinity) {
+                selectedPrize.count--;
+            }
+    
+            return selectedPrize.name;
+        }
+    
         // สร้างดาวทั้งหมด 20 ดวง
         for (let i = 1; i <= 20; i++) {
             const star = document.createElement('div');
             star.classList.add('star');
-
+    
             const offsetX = Math.random() * window.innerWidth;
             const offsetY = Math.random() * window.innerHeight;
-
+    
             star.style.left = `${offsetX}px`;
             star.style.top = `${offsetY}px`;
-
+    
             const duration = Math.random() * 10 + 5; 
             const animationName = `floatStar${i}`;
             const keyframes = `
@@ -158,23 +175,23 @@
             `;
             const styleSheet = document.styleSheets[0];
             styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
-
+    
             star.style.animation = `${animationName} ${duration}s ease-in-out infinite`;
-
+    
             star.addEventListener('click', () => {
-                const randomWord = words[Math.floor(Math.random() * words.length)];
                 const resultDiv = document.getElementById('result');
-                resultDiv.textContent = `คุณได้: ${randomWord}`;
+                const prize = getRandomPrize();
+                resultDiv.textContent = `คุณได้: ${prize}`;
                 resultDiv.classList.add('show');
-
+    
                 setTimeout(() => {
                     resultDiv.classList.remove('show');
                 }, 3000);
             });
-
+    
             starsContainer.appendChild(star);
         }
-
+    
         // สร้างหิมะตก
         function createSnowflake() {
             const snowflake = document.createElement('div');
@@ -184,13 +201,14 @@
             snowflake.style.animationDuration = Math.random() * 3 + 2 + "s";
             snowflake.style.fontSize = Math.random() * 10 + 10 + "px";
             document.body.appendChild(snowflake);
-
+    
             setTimeout(() => {
                 snowflake.remove();
             }, 5000);
         }
-
+    
         setInterval(createSnowflake, 200); // เพิ่มหิมะใหม่ทุก 200ms
     </script>
+    
 </body>
 </html>
